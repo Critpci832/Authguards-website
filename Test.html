@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Black Website with Dual Info Boxes, Snow, Hover Bounce & Typewriter</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+            position: relative;
+        }
+
+        .glow-rectangle {
+            position: relative;
+            z-index: 10;
+            width: 500px;
+            height: 300px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 25px 10px white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            border-radius: 12px;
+            background: transparent;
+            cursor: pointer;
+            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+            .glow-rectangle:hover {
+                box-shadow: 0 0 35px 15px white;
+                animation: bounce 1.5s ease-in-out infinite;
+            }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Snowflake styles */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform;
+            z-index: 5;
+            filter: drop-shadow(0 0 2px white);
+            animation-name: fall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        /* Typewriter caret animation */
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+            margin-left: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        @keyframes blink {
+            0%, 50% {
+                opacity: 1;
+            }
+
+            51%, 100% {
+                opacity: 0;
+            }
+        }
+
+        /* Info box at top right */
+        .info-box {
+            position: fixed;
+            background: rgba(255 255 255 / 0.1);
+            border: 1.5px solid #fff;
+            border-radius: 10px;
+            padding: 15px 20px;
+            width: 180px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #eee;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 15px 3px white;
+            z-index: 20;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+        }
+
+            .info-box.top-right {
+                top: 15px;
+                right: 15px;
+                text-align: right;
+            }
+
+            .info-box.top-left {
+                top: 15px;
+                left: 15px;
+                text-align: left;
+            }
+
+            .info-box h3 {
+                margin-top: 0;
+                margin-bottom: 8px;
+                font-size: 1.1rem;
+                font-weight: 700;
+                color: #fff;
+                text-align: center;
+            }
+
+            .info-box div {
+                margin-bottom: 6px;
+                display: flex;
+                justify-content: space-between;
+            }
+
+        .info-label {
+            font-weight: 600;
+            opacity: 0.8;
+        }
+
+        .info-value {
+            font-weight: 400;
+            font-family: monospace;
+            overflow-wrap: break-word;
+            max-width: 100px;
+            text-align: right;
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        /* Glow effect on hover for top-left names */
+        .info-box.top-left .info-value:hover {
+            color: #fff;
+            text-shadow: 0 0 8px #fff, 0 0 15px #fff, 0 0 20px #fff, 0 0 30px #fff;
+            cursor: pointer;
+        }
+
+        /* Blur IP by default, reveal on hover */
+        .info-value#ip-address {
+            filter: blur(5px);
+            transition: filter 0.3s ease;
+            cursor: pointer;
+            text-align: right;
+        }
+
+            .info-value#ip-address:hover {
+                filter: none;
+            }
+
+        /* Buttons container */
+        .button-container {
+            margin-top: auto;
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        /* Circular buttons */
+        .circle-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2.5px solid white;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px 3px white;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+            user-select: none;
+            text-decoration: none;
+        }
+
+            .circle-button:hover {
+                background-color: white;
+                color: black;
+                box-shadow: 0 0 25px 8px white;
+            }
+
+        /* Play music button style */
+        #playMusicBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: rgba(255 255 255 / 0.15);
+            border: 1.5px solid #fff;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+            #playMusicBtn:hover {
+                background-color: white;
+                color: black;
+            }
+    </style>
+</head>
+<body>
+    <div class="glow-rectangle">
+        <span class="typing-text"></span>
+        <div class="button-container">
+            <a href="https://authguards.com" target="_blank" class="circle-button">Website</a>
+            <a href="https://discord.gg/authguards" target="_blank" class="circle-button">Discord</a>
+        </div>
+    </div>
+
+    <div class="info-box top-right">
+        <h3>System Info</h3>
+        <div><span class="info-label">Date:</span> <span id="date" class="info-value">Loading...</span></div>
+        <div><span class="info-label">Time:</span> <span id="time" class="info-value">Loading...</span></div>
+        <div><span class="info-label">IP:</span> <span id="ip-address" class="info-value">Loading...</span></div>
+    </div>
+
+    <div class="info-box top-left">
+        <h3>Team</h3>
+        <div><span class="info-label">Founder:</span> <span class="info-value">Burr.exe</span></div>
+        <div><span class="info-label">Co-Founder:</span> <span class="info-value">Jayonna</span></div>
+        <div><span class="info-label">Manager:</span> <span class="info-value">Valid.gov</span></div>
+    </div>
+
+    <!-- YouTube iframe autoplay muted -->
+    <iframe id="ytplayer"
+            width="0"
+            height="0"
+            src="https://www.youtube.com/embed/yo7_px4vXYQ?autoplay=1&mute=1&controls=0&loop=1&playlist=yo7_px4vXYQ"
+            frameborder="0"
+            allow="autoplay"
+            allowfullscreen
+            style="display:none;"></iframe>
+
+    <!-- Play music button -->
+    <button id="playMusicBtn" title="Click to unmute music">▶ Play Music</button>
+
+    <script>
+        // Typewriter effect
+        const text = "AuthGuard.Com";
+        const typingText = document.querySelector('.typing-text');
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                typingText.textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 120);
+            }
+        }
+
+        typeWriter();
+
+        // Snowflake effect
+        const snowflakeCount = 60;
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+
+            const size = Math.random() * 6 + 4;
+            snowflake.style.width = `${size}px`;
+            snowflake.style.height = `${size}px`;
+
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+
+            const fallDuration = Math.random() * 10 + 5;
+            snowflake.style.animationDuration = `${fallDuration}s`;
+
+            snowflake.style.animationDelay = `${Math.random() * fallDuration}s`;
+
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+                createSnowflake();
+            }, fallDuration * 1000);
+        }
+
+        for (let i = 0; i < snowflakeCount; i++) {
+            createSnowflake();
+        }
+
+        // Update Date and Time every second
+        function updateDateTime() {
+            const now = new Date();
+            document.getElementById('date').textContent = now.toLocaleDateString();
+            document.getElementById('time').textContent = now.toLocaleTimeString();
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Fetch IP Address using ipify API
+        async function fetchIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                document.getElementById('ip-address').textContent = data.ip;
+            } catch (e) {
+                document.getElementById('ip-address').textContent = 'Unavailable';
+            }
+        }
+        fetchIP();
+
+        // Play music button functionality
+        const playBtn = document.getElementById('playMusicBtn');
+        const iframe = document.getElementById('ytplayer');
+
+        playBtn.addEventListener('click', () => {
+            // Show iframe so user can hear sound
+            iframe.style.display = 'block';
+            // Reload iframe with unmuted autoplay
+            iframe.src = "https://www.youtube.com/embed/yo7_px4vXYQ?autoplay=1&mute=0&controls=0&loop=1&playlist=yo7_px4vXYQ";
+
+            playBtn.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
